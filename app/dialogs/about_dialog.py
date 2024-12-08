@@ -1,19 +1,20 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QHBoxLayout
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import Qt
 
 class AboutDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle(self.tr("About"))
+        self.setWindowIcon(QIcon("icon.png"))
         self.setFixedSize(300, 200)
 
         layout = QVBoxLayout()
 
         # Add image at the center top
         image_label = QLabel()
-        pixmap = QPixmap("icon.png")  # Load the image
-        pixmap = pixmap.scaled(100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation)  # Scale it to fit
+        pixmap = QPixmap("icon.png")
+        pixmap = pixmap.scaled(100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         image_label.setPixmap(pixmap)
         image_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(image_label)
@@ -29,14 +30,14 @@ class AboutDialog(QDialog):
             '<a href="https://github.com/kalco/Locky" style="text-decoration:none;">Martin Rayovski</a>'
         )
         github_label.setAlignment(Qt.AlignCenter)
-        github_label.setOpenExternalLinks(True)  # Enable link clicking
+        github_label.setOpenExternalLinks(True)
         layout.addWidget(github_label)
 
         # Add close button
         button_layout = QHBoxLayout()
-        button_layout.addStretch(1)  # Add stretch to push the button to the right
+        button_layout.addStretch(1)
         close_button = QPushButton(self.tr("Close"))
-        close_button.setFixedWidth(100)  # Optional: Set a fixed width for the button
+        close_button.setFixedWidth(100)
         close_button.clicked.connect(self.accept)
         button_layout.addWidget(close_button)
         layout.addLayout(button_layout)
