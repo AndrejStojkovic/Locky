@@ -1,4 +1,5 @@
 import sys
+import os
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt5.QtGui import QIcon, QCursor
 from PyQt5.QtCore import QTranslator, QSize
@@ -6,6 +7,7 @@ from PyQt5.QtCore import QTranslator, QSize
 from app.dialogs.options_dialog import OptionsDialog
 from app.dialogs.about_dialog import AboutDialog
 from app.utils.db import initialize_database, get_saved_setting
+from app.utils.helpers import get_absolute_path
 
 class App(QApplication):
     def __init__(self, *args, **kwargs):
@@ -33,7 +35,8 @@ class TrayApp(QSystemTrayIcon):
         self.app = app
 
         # Load the main icon
-        self.icon = QIcon("icon.png")  # Original (colored) icon
+        self.icon = QIcon(get_absolute_path('icon.png'))
+        self.setIcon(self.icon)
         self.setToolTip(self.tr("Locky - Secure your screen like a boss!"))
 
         # Tray menu
@@ -72,12 +75,10 @@ class TrayApp(QSystemTrayIcon):
         self.update_icon_state(active=False)
 
     def update_icon_state(self, active):
-        """Update the tray icon appearance to reflect its active/inactive state."""
         if active:
-            # Set the original (colored) icon
             self.setIcon(self.icon)
         else:
-            # Create a "gray" version of the icon using QPixmap and QIcon
+            # Use a gray version of the icon
             pixmap = self.icon.pixmap(self.icon.actualSize(QSize(32, 32)), QIcon.Disabled, QIcon.Off)
             gray_icon = QIcon(pixmap)
             self.setIcon(gray_icon)

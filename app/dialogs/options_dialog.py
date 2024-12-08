@@ -6,12 +6,13 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QMovie,QIcon
 from app.utils.db import get_saved_setting, update_setting
+from app.utils.helpers import get_absolute_path
 
 class OptionsDialog(QDialog):
     def __init__(self, app=None):
         super().__init__()
         self.setWindowTitle(self.tr("Options"))
-        self.setWindowIcon(QIcon("icon.png"))
+        self.setWindowIcon(QIcon(get_absolute_path('icon.png')))
         self.setFixedSize(400, 300)
         self.app = app
 

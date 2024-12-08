@@ -6,6 +6,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.py" afterPath="$PROJECT_DIR$/app/app.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dialogs/about_dialog.py" afterPath="$PROJECT_DIR$/app/dialogs/about_dialog.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dialogs/options_dialog.py" afterPath="$PROJECT_DIR$/app/dialogs/options_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/utils/helpers.py" afterPath="$PROJECT_DIR$/app/utils/helpers.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,14 +21,12 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="63" column="43" lean-forward="false" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="189">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="47" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -35,10 +34,22 @@
       <file leaf-file-name="about_dialog.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/dialogs/about_dialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="8" column="45" lean-forward="false" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+            <state relative-caret-position="189">
+              <caret line="9" column="64" lean-forward="false" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
               <folding>
                 <element signature="e#0#82#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="helpers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/utils/helpers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="22" column="55" lean-forward="false" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -54,12 +65,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="options_dialog.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="options_dialog.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/dialogs/options_dialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-504">
-              <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-              <folding />
+            <state relative-caret-position="462">
+              <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,9 +96,10 @@
         <option value="$PROJECT_DIR$/,gitignore" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/utils/helpers.py" />
+        <option value="$PROJECT_DIR$/app/app.py" />
         <option value="$PROJECT_DIR$/app/dialogs/about_dialog.py" />
         <option value="$PROJECT_DIR$/app/dialogs/options_dialog.py" />
-        <option value="$PROJECT_DIR$/app/app.py" />
       </list>
     </option>
   </component>
@@ -468,7 +482,14 @@
       <option name="project" value="LOCAL" />
       <updated>1733657682608</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="working version">
+      <created>1733676180320</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733676180320</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -506,7 +527,8 @@
     <MESSAGE value="remove db from repo" />
     <MESSAGE value="fix code" />
     <MESSAGE value="delete db from repo" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete db from repo" />
+    <MESSAGE value="working version" />
+    <option name="LAST_COMMIT_MESSAGE" value="working version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -520,14 +542,6 @@
           <folding>
             <element signature="e#0#9#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/utils/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -583,10 +597,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/utils/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="22" column="55" lean-forward="false" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/dialogs/about_dialog.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="45" lean-forward="false" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+        <state relative-caret-position="189">
+          <caret line="9" column="64" lean-forward="false" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
           </folding>
@@ -595,18 +627,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/dialogs/options_dialog.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-504">
-          <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="63" column="43" lean-forward="false" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
+        <state relative-caret-position="462">
+          <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
