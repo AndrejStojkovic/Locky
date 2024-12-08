@@ -50,7 +50,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-locky_db.db
+
 # Translations
 *.mo
 *.pot
@@ -60,6 +60,7 @@ locky_db.db
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+locky_db.db
 
 # Flask stuff:
 instance/
