@@ -13,27 +13,7 @@ class App(QApplication):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.translator = QTranslator()
-        self.current_language = "English"  # Default language
-
-    def change_language(self, language):
-        """Change the application language."""
-        self.current_language = language
-        if language == "Македонски":
-            self.translator.load("mk.qm")
-        else:
-            self.translator.load("")
-        self.installTranslator(self.translator)
-
-        for widget in self.allWidgets():
-            if widget.isWindow():
-                widget.setWindowTitle(widget.windowTitle())
-
-
-class App(QApplication):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.translator = QTranslator()
-        self.current_language = "English"  # Default language
+        self.current_language = "English"
 
     def change_language(self, language):
         """Change the application language."""
@@ -88,8 +68,8 @@ class TrayApp(QSystemTrayIcon):
         """Force the QMenu to load by showing and hiding it quickly."""
         # Force PyQt to create the menu items by showing and hiding it
         fake_cursor_position = QCursor.pos()
-        self.tray_menu.popup(fake_cursor_position)  # Show the menu
-        self.tray_menu.hide()  # Instantly hide it
+        self.tray_menu.popup(fake_cursor_position)
+        self.tray_menu.hide()
 
     def run_lock_screen(self):
         """Run LockScreen after a delay specified by the duration setting."""
