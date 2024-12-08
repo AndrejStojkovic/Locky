@@ -468,7 +468,7 @@ class App(QApplication):
                 widget.setWindowTitle(widget.windowTitle())
 
 
-# Main function
+# Main function final
 def main():
     conn = sqlite3.connect("app_data.db")
     cursor = conn.cursor()
@@ -502,3 +502,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
