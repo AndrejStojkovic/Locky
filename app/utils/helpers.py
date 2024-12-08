@@ -16,11 +16,10 @@ def get_absolute_path(relative_path):
         # If running in a PyInstaller bundle (exe), use sys._MEIPASS
         base_path = sys._MEIPASS
     else:
-        # If running as a script, use the directory of the current file
-        base_path = os.path.dirname(os.path.abspath(__file__))
+        # If running as a script, use the directory of the main script (app.py)
+        base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-    # Return the absolute path to the file
-    return os.path.join(base_path, '..', relative_path)
+    return os.path.join(base_path, relative_path)
 
 def get_project_path():
     """Returns the absolute path to the project directory."""

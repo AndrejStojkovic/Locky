@@ -14,7 +14,7 @@ class AboutDialog(QDialog):
 
         # Add image at the center top
         image_label = QLabel()
-        pixmap = QPixmap("icon.png")
+        pixmap = QPixmap(get_absolute_path('icon.png'))
         pixmap = pixmap.scaled(100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         image_label.setPixmap(pixmap)
         image_label.setAlignment(Qt.AlignCenter)
