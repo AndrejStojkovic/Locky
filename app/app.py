@@ -1,5 +1,5 @@
 import sys
-import os
+import keyboard
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt5.QtGui import QIcon, QCursor
 from PyQt5.QtCore import QTranslator, QSize, QTimer
@@ -48,6 +48,7 @@ class TrayApp(QSystemTrayIcon):
 
         # Initial state: icon is gray (disabled)
         self.lock_screen_active = False
+        self.update_icon_state(active=False)
         self.lock_screen_timer = QTimer()
         self.lock_screen_timer.setSingleShot(True)
 
@@ -99,6 +100,8 @@ class TrayApp(QSystemTrayIcon):
         # Restore default state after closing LockScreen
         self.lock_screen_active = False
         self.update_icon_state(active=False)
+        keyboard.unblock_key('esc')
+        keyboard.unblock_key('win')
 
     def update_icon_state(self, active):
         """Update the icon to its active or inactive (gray) state."""
