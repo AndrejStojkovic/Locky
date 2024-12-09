@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdfcdb15-2eb6-49fc-ba00-de483142f563" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/characters/bang.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/characters/yosuke.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/characters/yu.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/characters/yukiko.gif" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/characters/ninja1.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/characters/ninja2.gif" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mk.qm" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/en.ts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/generate_ts_file.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mk.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.py" afterPath="$PROJECT_DIR$/app/app.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/dialogs/lock_screen.py" afterPath="$PROJECT_DIR$/app/dialogs/lock_screen.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/utils/helpers.py" afterPath="$PROJECT_DIR$/app/utils/helpers.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +22,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lock_screen.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lock_screen.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/dialogs/lock_screen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="173" column="0" lean-forward="false" selection-start-line="173" selection-start-column="0" selection-end-line="174" selection-end-column="35" />
+            <state relative-caret-position="269">
+              <caret line="158" column="48" lean-forward="false" selection-start-line="158" selection-start-column="48" selection-end-line="158" selection-end-column="48" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -38,10 +34,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1453">
+            <state relative-caret-position="-1138">
               <caret line="50" column="44" lean-forward="false" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -75,8 +71,8 @@
         <option value="$PROJECT_DIR$/app/dialogs/about_dialog.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/app/utils/helpers.py" />
-        <option value="$PROJECT_DIR$/app/dialogs/lock_screen.py" />
         <option value="$PROJECT_DIR$/app/app.py" />
+        <option value="$PROJECT_DIR$/app/dialogs/lock_screen.py" />
       </list>
     </option>
   </component>
@@ -508,7 +504,14 @@
       <option name="project" value="LOCAL" />
       <updated>1733688773884</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fix the bugs">
+      <created>1733743734817</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1733743734817</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -550,7 +553,8 @@
     <MESSAGE value="lockscreen" />
     <MESSAGE value="remove unused files" />
     <MESSAGE value="add readme.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="add readme.md" />
+    <MESSAGE value="fix the bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix the bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -724,22 +728,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/dialogs/lock_screen.py">
+    <entry file="file://$PROJECT_DIR$/app/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="173" column="0" lean-forward="false" selection-start-line="173" selection-start-column="0" selection-end-line="174" selection-end-column="35" />
+        <state relative-caret-position="-1138">
+          <caret line="50" column="44" lean-forward="false" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.py">
+    <entry file="file://$PROJECT_DIR$/app/dialogs/lock_screen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1453">
-          <caret line="50" column="44" lean-forward="false" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
+        <state relative-caret-position="269">
+          <caret line="158" column="48" lean-forward="false" selection-start-line="158" selection-start-column="48" selection-end-line="158" selection-end-column="48" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

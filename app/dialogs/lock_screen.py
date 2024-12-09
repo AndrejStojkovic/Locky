@@ -154,9 +154,9 @@ class LockScreen(QDialog):
 
         # Typewriter setup for multiple phrases
         self.typewriter_phrases = [
-            "Welcome to the Lock Screen.",
-            "You need to enter your password to continue.",
-            "Security is our priority."
+            self.tr("Welcome to the Lock Screen."),
+            self.tr("You need to enter your password to continue."),
+            self.tr("Security is our priority.")
         ]
         self.current_phrase_index = 0
         self.current_text_index = 0
