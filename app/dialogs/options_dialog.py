@@ -1,12 +1,13 @@
 import os
+import glob
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QLineEdit, QPushButton,
-    QSpinBox, QTabWidget, QComboBox, QButtonGroup, QRadioButton, QWidget, QMessageBox
+    QSpinBox, QTabWidget, QComboBox, QButtonGroup, QRadioButton, QWidget, QMessageBox, QSizePolicy
 )
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QMovie,QIcon
 from app.utils.db import get_saved_setting, update_setting
-from app.utils.helpers import get_absolute_path
+from app.utils.helpers import get_absolute_path, get_resource_path
 
 class OptionsDialog(QDialog):
     def __init__(self, app=None):
@@ -91,44 +92,48 @@ class OptionsDialog(QDialog):
 
     def load_character_options(self, layout):
         """Load and display animated characters as options."""
-        characters_dir = "./characters"
-        files = [f for f in os.listdir(characters_dir) if f.endswith('.gif')]
-
-        # Get available space for displaying the GIFs
-        dialog_width = self.width()  # Get dialog width
-        max_width = dialog_width // 2 - 20  # Half-width of the dialog minus padding
-        max_height = 150  # Set a reasonable maximum height
+        characters_dir = get_absolute_path('characters')  # Get absolute path for exe
+        files = glob.glob(os.path.join(characters_dir, '*.gif'))  # Get all GIF files
 
         for i, file in enumerate(files, start=1):
-            # Create a radio button for each character
-            radio_button = QRadioButton(f"{i}")
+            # Check if the file exists
+            if not os.path.isfile(file):
+                continue
+
+            # Create radio button with the name of the image as label
+            file_name = os.path.splitext(os.path.basename(file))[0]
+            radio_button = QRadioButton(file_name.capitalize())
             radio_button.setChecked(get_saved_setting("character") == i)
             self.character_group.addButton(radio_button, i)
 
-            # Create a label with the animated GIF
-            image_path = os.path.join(characters_dir, file)
-            gif_movie = QMovie(image_path)
-
-            # Get original size of the GIF and calculate scale factor
-            original_size = gif_movie.scaledSize()
-            scale_factor = min(max_width / original_size.width(), max_height / original_size.height())
-            scaled_width = int(original_size.width() * scale_factor)
-            scaled_height = int(original_size.height() * scale_factor)
-            gif_movie.setScaledSize(QSize(scaled_width, scaled_height))  # Scale GIF
-
+            # Create QLabel for displaying GIF
             gif_label = QLabel()
-            gif_label.setMovie(gif_movie)
-            gif_movie.start()  # Start the animation
+            gif_label.setAlignment(Qt.AlignCenter)
 
-            # Handle clicking on the GIF to select the radio button
+            # Create QMovie and load GIF file
+            gif_movie = QMovie()
+            gif_movie.setFileName(file)  # Use setFileName for better file path handling
+            gif_movie.start()
+
+            if not gif_movie.isValid():
+                continue
+
+            # Set static size for each GIF (90x65)
+            fixed_width = 90
+            fixed_height = 65
+            gif_movie.setScaledSize(QSize(fixed_width, fixed_height))  # Set GIF size to 90x65
+
+            # Set movie on the QLabel
+            gif_label.setMovie(gif_movie)
+            gif_movie.start()
+
+            # Handle click event to select radio button
             gif_label.mousePressEvent = lambda _, b=radio_button: b.setChecked(True)
 
-            # Add radio button and animation label
+            # Add layout for character option
             char_layout = QVBoxLayout()
             char_layout.addWidget(gif_label)
             char_layout.addWidget(radio_button)
-
-            # Add the character option to the layout
             layout.addLayout(char_layout)
 
     def load_background_options(self, layout):
