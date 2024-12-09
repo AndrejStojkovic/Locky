@@ -136,7 +136,7 @@ class LockScreen(QDialog):
 
         # Unlock Button
         unlock_button = QPushButton(self.tr("Unlock"))
-        unlock_button.setFixedWidth(100)  # Independent width for button
+        unlock_button.setFixedWidth(150)
         unlock_button.clicked.connect(self.handle_unlock)
 
         # Add 5px margin to the left of the button
@@ -160,7 +160,7 @@ class LockScreen(QDialog):
         ]
         self.current_phrase_index = 0
         self.current_text_index = 0
-        self.typewriter_speed = 50  # Milliseconds between character updates
+        self.typewriter_speed = 50
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_typewriter_text)
 

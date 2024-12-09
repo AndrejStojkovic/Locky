@@ -1,13 +1,15 @@
 import sys
 import keyboard
+import mouse
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt5.QtGui import QIcon, QCursor
-from PyQt5.QtCore import QTranslator, QSize, QTimer
+from PyQt5.QtCore import QTranslator, QSize, QTimer, QEvent,QObject, QThread, pyqtSignal
 from app.dialogs.lock_screen import LockScreen
 from app.dialogs.options_dialog import OptionsDialog
 from app.dialogs.about_dialog import AboutDialog
 from app.utils.db import initialize_database, get_saved_setting
-from app.utils.helpers import get_absolute_path
+from app.utils.helpers import get_absolute_path, get_resource_path
+
 
 class App(QApplication):
     def __init__(self, *args, **kwargs):
@@ -19,17 +21,22 @@ class App(QApplication):
         """Change the application language."""
         self.current_language = language
         if language == "Македонски":
-            self.translator.load("mk.qm")
+            qm_path = get_resource_path('app/translations/mk.qm')
+            self.translator.load(qm_path)
         else:
-            self.translator.load("")
+            qm_path = get_resource_path('app/translations/en.qm')
+            self.translator.load(qm_path)
+
         self.installTranslator(self.translator)
 
+        # Update all window titles to reflect the language change
         for widget in self.allWidgets():
             if widget.isWindow():
                 widget.setWindowTitle(widget.windowTitle())
 
+class TrayApp(QSystemTrayIcon, QObject):
+    trigger_lock_screen = pyqtSignal()  # Custom signal to trigger lock screen on the main thread
 
-class TrayApp(QSystemTrayIcon):
     def __init__(self, app):
         super().__init__()
         self.app = app
@@ -49,13 +56,19 @@ class TrayApp(QSystemTrayIcon):
         # Initial state: icon is gray (disabled)
         self.lock_screen_active = False
         self.update_icon_state(active=False)
-        self.lock_screen_timer = QTimer()
-        self.lock_screen_timer.setSingleShot(True)
+
+        # Inactivity timer and lock logic
+        self.inactivity_timer = QTimer()
+        self.inactivity_timer.setSingleShot(True)
+        self.lock_screen_ready = False  # Lock screen is ready after the inactivity timer
+
+        # Connect signal to method to ensure it runs on the main thread
+        self.trigger_lock_screen.connect(self.execute_lock_screen)
 
     def create_tray_menu(self):
         """Create the tray menu and pre-populate it."""
         self.tray_menu = QMenu()
-        self.run_action = self.tray_menu.addAction(self.tr("Run"), self.run_lock_screen)
+        self.run_action = self.tray_menu.addAction(self.tr("Run"), self.start_inactivity_timer)
         self.tray_menu.addSeparator()
         self.tray_menu.addAction(self.tr("Options..."), self.show_options_dialog)
         self.tray_menu.addAction(self.tr("About..."), self.show_about_dialog)
@@ -67,13 +80,12 @@ class TrayApp(QSystemTrayIcon):
 
     def preload_tray_menu(self):
         """Force the QMenu to load by showing and hiding it quickly."""
-        # Force PyQt to create the menu items by showing and hiding it
         fake_cursor_position = QCursor.pos()
         self.tray_menu.popup(fake_cursor_position)
         self.tray_menu.hide()
 
-    def run_lock_screen(self):
-        """Run LockScreen after a delay specified by the duration setting."""
+    def start_inactivity_timer(self):
+        """Start the countdown for inactivity."""
         if self.lock_screen_active:
             return  # Do nothing if LockScreen is already active
 
@@ -83,17 +95,40 @@ class TrayApp(QSystemTrayIcon):
         # Get the duration from the database
         duration = get_saved_setting("duration")
         if not duration:
-            duration = 10  # Default to 10 seconds if not set
+            duration = 5  # Default to 5 seconds if not set
 
-        # Delay execution of LockScreen using QTimer
-        self.lock_screen_timer.timeout.connect(self.execute_lock_screen)
-        self.lock_screen_timer.start(duration * 1000)
+        # Start the inactivity timer
+        self.lock_screen_ready = False  # Lock screen is not ready until the countdown finishes
+        self.inactivity_timer.timeout.connect(self.enable_lock_screen_on_input)
+        self.inactivity_timer.start(duration * 1000)  # Convert to milliseconds
+
+    def enable_lock_screen_on_input(self):
+        """Enable lock screen and wait for the first global user input."""
+        self.lock_screen_ready = True  # Enable lock screen trigger on next input
+
+        # Start global listeners for keyboard and mouse
+        mouse.hook(self.on_user_input_detected)  # Hooks all mouse events (move, click, scroll)
+        keyboard.on_press(self.on_user_input_detected)  # Hooks keyboard events
+
+    def on_user_input_detected(self, event=None):
+        """Detects first user input (keyboard or mouse) after inactivity timer finishes."""
+        if self.lock_screen_ready and not self.lock_screen_active:
+            self.stop_global_listeners()
+            self.trigger_lock_screen.emit()  # Trigger lock screen **ON THE MAIN THREAD**
+
+    def stop_global_listeners(self):
+        """Stop the global listeners for mouse and keyboard input."""
+        mouse.unhook_all()
+        keyboard.unhook_all()
 
     def execute_lock_screen(self):
-        """Execute the LockScreen."""
-        self.lock_screen_active = True
+        """Execute the LockScreen on the main thread."""
+        if self.lock_screen_active:
+            return
 
-        # Show LockScreen
+        self.lock_screen_active = True
+        self.lock_screen_ready = False  # Reset the flag
+
         self.lock_screen = LockScreen()
         self.lock_screen.exec_()
 
@@ -129,8 +164,7 @@ class TrayApp(QSystemTrayIcon):
     def on_tray_icon_activated(self, reason):
         """Open the menu for both left-click and right-click events."""
         if reason in (QSystemTrayIcon.Trigger, QSystemTrayIcon.Context):
-            self.tray_menu.popup(QCursor.pos())  # Opens instantly
-
+            self.tray_menu.popup(QCursor.pos())
 
 def main():
     initialize_database()

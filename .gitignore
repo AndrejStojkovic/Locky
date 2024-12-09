@@ -61,6 +61,9 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 locky_db.db
+generate_ts_file.py
+mk.ts
+en.ts
 
 # Flask stuff:
 instance/
