@@ -64,6 +64,7 @@ locky_db.db
 generate_ts_file.py
 mk.ts
 en.ts
+LockySetup.iss
 
 # Flask stuff:
 instance/
