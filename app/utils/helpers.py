@@ -37,3 +37,11 @@ def get_resource_path(filename):
     if not os.path.isfile(resource_path):
         print(f"Error: Resource file not found at {resource_path}")
     return resource_path
+
+def get_database_path():
+    if getattr(sys, 'frozen', False):  # If the app is running as an .exe
+        base_path = sys._MEIPASS
+    else:  # If running from source
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+    return os.path.join(base_path, "locky_db.db")

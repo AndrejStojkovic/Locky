@@ -1,7 +1,9 @@
 import sqlite3
+from app.utils.helpers import get_database_path
 
 def get_connection():
-    return sqlite3.connect("locky_db.db")
+    db_path = get_database_path()
+    return sqlite3.connect(db_path)
 
 def initialize_database():
     conn = get_connection()
