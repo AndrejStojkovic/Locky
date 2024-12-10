@@ -1,8 +1,18 @@
 import sqlite3
+import os
 from app.utils.helpers import get_database_path
 
 def get_connection():
+    """
+    Establishes a connection to the database.
+    Creates the database file if it doesn't exist.
+    """
     db_path = get_database_path()
+
+    # Create the database file if it doesn't exist
+    if not db_path.exists():
+        db_path.touch()  # Create an empty file
+
     return sqlite3.connect(db_path)
 
 def initialize_database():

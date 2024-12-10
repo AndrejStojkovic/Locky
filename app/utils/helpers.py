@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 
 def get_absolute_path(relative_path):
     """
@@ -39,9 +40,19 @@ def get_resource_path(filename):
     return resource_path
 
 def get_database_path():
-    if getattr(sys, 'frozen', False):  # If the app is running as an .exe
-        base_path = sys._MEIPASS
-    else:  # If running from source
-        base_path = os.path.dirname(os.path.abspath(__file__))
+    """
+    Returns the absolute path to the locky_db.db file.
+    - If running from source: places the database in the root folder.
+    - If running as a standalone executable: places the database in a writable directory.
+    """
+    if getattr(sys, 'frozen', False):  # Running as an .exe
+        # Use a writable directory (e.g., APPDATA/Locky)
+        base_path = Path(os.getenv('APPDATA')) / "Locky"
+    else:  # Running from source
+        # Use the script's root directory
+        base_path = Path(os.path.dirname(os.path.abspath(__file__)))
 
-    return os.path.join(base_path, "locky_db.db")
+    # Ensure the base directory exists
+    base_path.mkdir(parents=True, exist_ok=True)
+
+    return base_path / "locky_db.db"
