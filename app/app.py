@@ -16,6 +16,7 @@ class App(QApplication):
         super().__init__(*args, **kwargs)
         self.translator = QTranslator()
         self.current_language = "English"
+        self.active = False
 
     def change_language(self, language):
         """Change the application language."""
@@ -55,7 +56,7 @@ class TrayApp(QSystemTrayIcon, QObject):
 
         # Initial state: icon is gray (disabled)
         self.lock_screen_active = False
-        self.update_icon_state(active=False)
+        self.update_active_state(active=False)
 
         # Inactivity timer and lock logic
         self.inactivity_timer = QTimer()
@@ -68,7 +69,7 @@ class TrayApp(QSystemTrayIcon, QObject):
     def create_tray_menu(self):
         """Create the tray menu and pre-populate it."""
         self.tray_menu = QMenu()
-        self.run_action = self.tray_menu.addAction(self.tr("Run"), self.start_inactivity_timer)
+        self.run_action = self.tray_menu.addAction(self.tr("Enabled" if self.app.active else "Disabled"), self.set_inactivity_timer)
         self.tray_menu.addSeparator()
         self.tray_menu.addAction(self.tr("Options..."), self.show_options_dialog)
         self.tray_menu.addAction(self.tr("About..."), self.show_about_dialog)
@@ -84,23 +85,31 @@ class TrayApp(QSystemTrayIcon, QObject):
         self.tray_menu.popup(fake_cursor_position)
         self.tray_menu.hide()
 
-    def start_inactivity_timer(self):
+    def update_run_action_text(self):
+        self.run_action.setText("Enabled" if self.app.active else "Disabled")
+
+    def set_inactivity_timer(self):
         """Start the countdown for inactivity."""
         if self.lock_screen_active:
             return  # Do nothing if LockScreen is already active
 
-        # Change the icon to active immediately
-        self.update_icon_state(active=True)
+        # Change the active state immediately
+        self.update_active_state(active=not self.app.active)
 
         # Get the duration from the database
         duration = get_saved_setting("duration")
         if not duration:
             duration = 5  # Default to 5 seconds if not set
 
-        # Start the inactivity timer
-        self.lock_screen_ready = False  # Lock screen is not ready until the countdown finishes
-        self.inactivity_timer.timeout.connect(self.enable_lock_screen_on_input)
-        self.inactivity_timer.start(duration * 1000)  # Convert to milliseconds
+        if self.app.active:
+            # Start the inactivity timer
+            self.lock_screen_ready = False  # Lock screen is not ready until the countdown finishes
+            self.inactivity_timer.timeout.connect(self.enable_lock_screen_on_input)
+            self.inactivity_timer.start(duration * 1000)  # Convert to milliseconds
+        else:
+            # Stop the inactivity timer
+            self.lock_screen_ready = False
+            self.inactivity_timer.stop()
 
     def enable_lock_screen_on_input(self):
         """Enable lock screen and wait for the first global user input."""
@@ -134,11 +143,15 @@ class TrayApp(QSystemTrayIcon, QObject):
 
         # Restore default state after closing LockScreen
         self.lock_screen_active = False
-        self.update_icon_state(active=False)
+        self.update_active_state(active=False)
         keyboard.unblock_key('esc')
         keyboard.unblock_key('win')
 
-    def update_icon_state(self, active):
+    def update_active_state(self, active):
+        """Update the global active state of the app."""
+        self.app.active = active
+        self.update_run_action_text()
+
         """Update the icon to its active or inactive (gray) state."""
         if active:
             self.setIcon(self.icon)
