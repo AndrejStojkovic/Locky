@@ -104,25 +104,26 @@ class LockScreen(QDialog):
         self.typewriter_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.typewriter_label)
 
-        # GIF Animation
-        self.gif_label = QLabel()
-        self.gif_label.setAlignment(Qt.AlignCenter)
-        self.gif_label.setFixedWidth(500)  # Independent width for animation
+        # GIF Animation, dynamically select the character GIF
+        gif_path = ''
 
-        # Dynamically select the character GIF
         if character == 1:
             gif_path = get_resource_path('characters/bang.gif')
         elif character == 2:
             gif_path = get_resource_path('characters/yosuke.gif')
         elif character == 3:
             gif_path = get_resource_path('characters/yu.gif')
-        else:
+        elif character == 4:
             gif_path = get_resource_path('characters/yukiko.gif')
 
-        self.gif_movie = QMovie(gif_path)
-        self.gif_label.setMovie(self.gif_movie)
-        layout.addWidget(self.gif_label)
-        self.gif_movie.start()
+        if gif_path != '':
+            self.gif_label = QLabel()
+            self.gif_label.setAlignment(Qt.AlignCenter)
+            self.gif_label.setFixedWidth(500)  # Independent width for animation
+            self.gif_movie = QMovie(gif_path)
+            self.gif_label.setMovie(self.gif_movie)
+            layout.addWidget(self.gif_label)
+            self.gif_movie.start()
 
         # Horizontal Layout for Input and Button
         input_button_layout = QHBoxLayout()

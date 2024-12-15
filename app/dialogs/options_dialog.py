@@ -92,8 +92,20 @@ class OptionsDialog(QDialog):
 
     def load_character_options(self, layout):
         """Load and display animated characters as options."""
+        full_layout = QVBoxLayout()
         characters_dir = get_absolute_path('characters')  # Get absolute path for exe
         files = glob.glob(os.path.join(characters_dir, '*.gif'))  # Get all GIF files
+    
+        # Add option for no image to be displayed
+        radio_button = QRadioButton("No media")
+        radio_button.setChecked(get_saved_setting("character") == 0)
+        self.character_group.addButton(radio_button, 0)
+        no_img_layout = QHBoxLayout()
+        no_img_layout.addWidget(radio_button)
+        full_layout.addLayout(no_img_layout)
+
+        # Layout for the characters
+        characters_layout = QHBoxLayout()
 
         for i, file in enumerate(files, start=1):
             # Check if the file exists
@@ -134,7 +146,10 @@ class OptionsDialog(QDialog):
             char_layout = QVBoxLayout()
             char_layout.addWidget(gif_label)
             char_layout.addWidget(radio_button)
-            layout.addLayout(char_layout)
+            characters_layout.addLayout(char_layout)
+        
+        full_layout.addLayout(characters_layout)
+        layout.addLayout(full_layout)
 
     def load_background_options(self, layout):
         """Load and display background color options."""
