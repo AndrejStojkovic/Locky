@@ -50,6 +50,29 @@ class TrayApp(QSystemTrayIcon, QObject):
 
         # Pre-create and pre-populate the tray menu (instant access)
         self.create_tray_menu()
+        self.tray_menu.setStyleSheet("""
+                    QMenu {
+                        background-color: rgba(50, 50, 50, 0.95); /* Dark background with slight transparency */
+                        color: white; /* White text */
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    }
+                    QMenu::item {
+                        background-color: transparent; /* Transparent background */
+                        color: white;
+                        padding: 12px 24px; /* Increase padding for larger items */
+                        font-size: 14px; /* Increase font size */
+                    }
+                    QMenu::item:selected {
+                        background-color: rgba(255, 255, 255, 0.2); /* Light gray hover effect */
+                        color: white;
+                    }
+                    QMenu::separator {
+                        height: 2px;
+                        background: rgba(255, 255, 255, 0.2); /* Separator with slight transparency */
+                        margin-left: 10px;
+                        margin-right: 10px;
+                    }
+                """)
 
         # Connect left-click and right-click to show the menu
         self.activated.connect(self.on_tray_icon_activated)
@@ -69,7 +92,7 @@ class TrayApp(QSystemTrayIcon, QObject):
     def create_tray_menu(self):
         """Create the tray menu and pre-populate it."""
         self.tray_menu = QMenu()
-        self.run_action = self.tray_menu.addAction(self.tr("Enabled" if self.app.active else "Disabled"), self.set_inactivity_timer)
+        self.run_action = self.tray_menu.addAction(self.tr("Enabled" if self.app.active else self.tr("Disabled")), self.set_inactivity_timer)
         self.tray_menu.addSeparator()
         self.tray_menu.addAction(self.tr("Options..."), self.show_options_dialog)
         self.tray_menu.addAction(self.tr("About..."), self.show_about_dialog)
@@ -86,7 +109,7 @@ class TrayApp(QSystemTrayIcon, QObject):
         self.tray_menu.hide()
 
     def update_run_action_text(self):
-        self.run_action.setText("Enabled" if self.app.active else "Disabled")
+        self.run_action.setText(self.tr("Enabled") if self.app.active else self.tr("Disabled"))
 
     def set_inactivity_timer(self):
         """Start the countdown for inactivity."""
@@ -146,6 +169,7 @@ class TrayApp(QSystemTrayIcon, QObject):
         self.update_active_state(active=False)
         keyboard.unblock_key('esc')
         keyboard.unblock_key('win')
+        keyboard.unblock_key('tab')
 
     def update_active_state(self, active):
         """Update the global active state of the app."""

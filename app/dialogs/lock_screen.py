@@ -169,10 +169,12 @@ class LockScreen(QDialog):
         self.start_typewriter_effect()
         keyboard.block_key('esc')
         keyboard.block_key('win')
+        keyboard.block_key('tab')
 
     def closeEvent(self, event):
         keyboard.unblock_key('esc')
         keyboard.unblock_key('win')
+        keyboard.block_key('tab')
 
     def start_typewriter_effect(self):
         """Start the typewriter effect for the current phrase."""
